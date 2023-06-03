@@ -1,11 +1,22 @@
+# main.tf
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
 provider "aws" {
-  region = "us-west-2"  # Replace with your desired region
+  region = "us-east-1"  # Update with your desired region
 }
 
 resource "aws_lambda_function" "spring_app" {
   function_name = "my-spring-app"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "com.example.HelloWorldApplication::handleRequest"  # Replace with your actual handler class and method
+  handler       = "com.example.MySpringApp::handleRequest"  # Update with your actual handler class and method
 
   runtime = "java11"
   timeout = 10
@@ -16,7 +27,7 @@ resource "aws_lambda_function" "spring_app" {
     }
   }
 
-  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar"  # Replace with the path to your Spring Boot JAR
+  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar"  # Update with the path to your Spring Boot JAR
   source_code_hash = filebase64sha256("/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar")
 }
 
@@ -46,7 +57,7 @@ resource "aws_lambda_permission" "api_gateway" {
   function_name = aws_lambda_function.spring_app.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "arn:aws:execute-api:us-west-2:214461077290:yg0yzw1sbh"  # Replace with the correct API Gateway ARN
+  source_arn = aws_api_gateway_rest_api.api_gateway.execution_arn
 }
 
 resource "aws_api_gateway_rest_api" "api_gateway" {
@@ -80,5 +91,13 @@ resource "aws_api_gateway_method_response" "api_gateway_method_response" {
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
   resource_id   = aws_api_gateway_resource.api_gateway_resource.id
   http_method   = aws_api_gateway_method.api_gateway_method.http_method
-  status_code   = "200"  # Add the desired status code for the method response
+  status_code   = "200"
+  response_models = {
+    "application/json" = "Empty"
+  }
+}
+
+resource "aws_api_gateway_integration_response" "api_gateway_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  resource_id = aws_api_gateway_resource.api_gateway_resource.id
 }
