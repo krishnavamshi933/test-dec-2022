@@ -18,11 +18,9 @@ class DatabaseIntegrationTest {
 
     @Test
     void testDatabaseConnection() {
-        // Use the JdbcTemplate to perform database operations
-        // For example, execute a query to create a table
+        
         jdbcTemplate.execute("CREATE TABLE example (id SERIAL, name VARCHAR(255))");
 
-        // Perform additional database tests/assertions
-        // ...
+       
     }
 }
