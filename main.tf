@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"  # Update with your desired region
+  region = "us-west-2"  # Update with your desired region
 }
 
 resource "aws_lambda_function" "spring_app" {
