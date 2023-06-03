@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_lambda_function" "spring_app" {
   function_name = "my-spring-app"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "com.example.MySpringApp::handleRequest"  # Replace with your actual handler class and method
+  handler       = "com.example.HelloWorldApplication::handleRequest"  # Replace with your actual handler class and method
 
   runtime = "java11"
   timeout = 10
@@ -80,9 +80,5 @@ resource "aws_api_gateway_method_response" "api_gateway_method_response" {
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
   resource_id   = aws_api_gateway_resource.api_gateway_resource.id
   http_method   = aws_api_gateway_method.api_gateway_method.http_method
-  status_code   = "200"  # Replace with the desired HTTP status code
-
-  response_models = {
-    "application/json" = "Empty"
-  }
+  status_code   = "200"  # Add the desired status code for the method response
 }
