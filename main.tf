@@ -1,6 +1,3 @@
-Certainly! Here's the updated Terraform code with the corrected API Gateway ARN:
-
-```terraform
 provider "aws" {
   region = "us-west-2"  # Replace with your desired region
 }
@@ -85,6 +82,3 @@ resource "aws_api_gateway_method_response" "api_gateway_method_response" {
   http_method   = aws_api_gateway_method.api_gateway_method.http_method
   status_code   = "200"  # Add the desired status code for the method response
 }
-```
-
-Make sure to replace `"arn:aws:execute-api:us-west-2:214461077290:yg0yzw1sbh"` with the actual ARN of your API Gateway.
