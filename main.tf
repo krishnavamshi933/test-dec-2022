@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "us-west-2"  # Replace with your desired region
+  region = "us-west-2" 
 }
 
 resource "aws_lambda_function" "spring_app" {
   function_name = "my-spring-app"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "com.example.MySpringApp::handleRequest"  # Replace with your actual handler class and method
+  handler       = "com.example.MySpringApp::handleRequest"  
 
   runtime = "java11"
   timeout = 10
@@ -16,7 +16,7 @@ resource "aws_lambda_function" "spring_app" {
     }
   }
 
-  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar"  # Replace with the path to your Spring Boot JAR
+  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar" 
   source_code_hash = filebase64sha256("/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar")
 }
 
