@@ -16,8 +16,8 @@ resource "aws_lambda_function" "spring_app" {
     }
   }
 
-  filename         = "path/to/your/spring-app.jar"  # Replace with the path to your Spring Boot JAR
-  source_code_hash = filebase64sha256("path/to/your/spring-app.jar")
+  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar"  # Replace with the path to your Spring Boot JAR
+  source_code_hash = filebase64sha256("/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar")
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
