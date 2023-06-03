@@ -107,4 +107,8 @@ resource "aws_api_gateway_integration_response" "api_gateway_integration_respons
   response_templates = {
     "application/json" = ""
   }
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+  }
+}
 }
