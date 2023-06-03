@@ -27,8 +27,8 @@ resource "aws_lambda_function" "spring_app" {
     }
   }
 
-  filename         = "/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar"  # Update with the path to your Spring Boot JAR
-  source_code_hash = filebase64sha256("/home/kali/test-dec-2022/target/spring-boot-app-1.0.0.jar")
+  filename         = "path/to/your/spring-app.jar"  # Update with the path to your Spring Boot JAR
+  source_code_hash = filebase64sha256("path/to/your/spring-app.jar")
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
@@ -92,20 +92,18 @@ resource "aws_api_gateway_method_response" "api_gateway_method_response" {
   resource_id   = aws_api_gateway_resource.api_gateway_resource.id
   http_method   = aws_api_gateway_method.api_gateway_method.http_method
   status_code   = "200"
+
   response_models = {
     "application/json" = "Empty"
   }
 }
 
 resource "aws_api_gateway_integration_response" "api_gateway_integration_response" {
-  rest_api_id    = aws_api_gateway_rest_api.api_gateway.id
-  resource_id    = aws_api_gateway_resource.api_gateway_resource.id
-  http_method    = aws_api_gateway_method.api_gateway_method.http_method
-  status_code    = "200"
+  rest_api_id     = aws_api_gateway_rest_api.api_gateway.id
+  resource_id     = aws_api_gateway_resource.api_gateway_resource.id
+  http_method     = aws_api_gateway_method.api_gateway_method.http_method
+  status_code     = aws_api_gateway_method_response.api_gateway_method_response.status_code
   response_templates = {
     "application/json" = ""
-  }
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
 }
