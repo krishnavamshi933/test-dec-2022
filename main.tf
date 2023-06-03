@@ -111,4 +111,3 @@ resource "aws_api_gateway_integration_response" "api_gateway_integration_respons
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
 }
-}
